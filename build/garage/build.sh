@@ -17,7 +17,7 @@
 . ../../lib/build.sh
 
 PROG=garage
-VER=v2.2.0
+VER=2.2.0
 PKG=ooce/storage/garage
 SUMMARY="Garage object storage"
 DESC="S3-compatible distributed object storage service designed for self-hosting at a small-to-medium scale."
@@ -35,14 +35,18 @@ XFORM_ARGS="
     -DGROUP=garage
 "
 
+SKIP_SSP_CHECK=1
+BMI_EXPECTED=1
+
 pre_build() {
     typeset arch=$1
+    
     export RUSTFLAGS="-C link-arg=-R$OPREFIX/${LIBDIRS[$arch]}"
     export LD_LIBRARY_PATH="$OPREFIX/${LIBDIRS[$arch]}"
 }
 
 init
-clone_github_source -submodules $PROG "https://git.deuxfleurs.fr/Deuxfleurs/$PROG" $VER
+clone_github_source -submodules $PROG "https://git.deuxfleurs.fr/Deuxfleurs/$PROG" "v$VER"
 append_builddir $PROG
 SODIUM_USE_PKG_CONFIG=1 build_rust
 install_rust
