@@ -49,6 +49,11 @@ init
 clone_github_source -submodules $PROG "https://git.deuxfleurs.fr/Deuxfleurs/$PROG" "v$VER"
 append_builddir $PROG
 SODIUM_USE_PKG_CONFIG=1 build_rust
+strip_install
 install_rust
 VER=${VER//-/.} make_package
 clean_up
+
+
+# Vim hints
+# vim:ts=4:sw=4:et:fdm=marker
